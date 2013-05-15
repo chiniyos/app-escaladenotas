@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Escala de Notas</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+<link href="table.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+<script>
+function calcula()
+{
+	var nmax = parseFloat(document.getElementById('nmax').value);
+	var nmin = parseFloat(document.getElementById('nmin').value);
+	var napr = parseFloat(document.getElementById('napr').value);
+	var exig = (document.getElementById('exig').value / 100);
+	var punt = document.getElementById('punt').value;
+	var cort = ( punt * exig );	
+	var minr1 = (napr - nmin);
+	
+	var resul = '<table border="1" class="notetable" align="center"><tr><td><b>Puntaje</b></td><td><b>Nota</b></td><td><b>Puntaje</b></td><td><b>Nota</b></td></tr>';
+	
+	for (var i=1; i<=cort; i++ )
+	{
+		resul= resul + '<tr>';
+		
+		<!-- Bajo el Corte -->
+		
+		nota=(( i*minr1 )/cort );
+		nota=(( nota + nmin ));
+		
+		resul = resul + '<td>'+i+'</td><td style="color: #900;">'+nota.toFixed(1)+'</td>';
+		
+		ii=( cort + i );
+		
+		<!-- Sobre el Corte -->
+		
+		if ( ii <= punt )
+		{		
+		nota2=(( ii*nmax )/punt );
+		resul = resul + '<td>'+ii+'</b></td><td style="color: #009;">'+nota2.toFixed(1)+'</td>';
+		}
+		resul= resul + '</tr>';
+	}
+	
+	document.getElementById('resultado').innerHTML = resul;
+}
+</script>
+
+</head>
+
+<body>
+<!--
+Nota Máxima
+Nota Mínima
+Nota Aprobación
+Exigencia (%)
+-->
+<h1 align="center">Escala de Notas</h1>
+<table align="center">
+	<tr>
+    	<td>Nota Máxima</td>
+        <td><input type="number" step="0.1" value="7.0" id="nmax" /></td>
+    </tr>
+    <tr>
+    	<td>Nota Mínima</td>
+        <td><input type="number" step="0.1" value="1.0" id="nmin" /></td>
+    </tr>
+    <tr>
+    	<td>Nota Aprobación</td>
+        <td><input type="number" step="0.1" value="4.0" id="napr" /></td>
+    </tr>
+    <tr>
+    	<td>Exigencia (%)</td>
+        <td><input type="number" step="5" value="60" id="exig" /></td>
+    </tr>
+    <tr>
+    	<td>Puntaje Máximo</td>
+        <td><input type="number" step="1" value="100" id="punt" /></td>
+    </tr>
+</table>
+<div align="center" style="width:100%">
+	<button onclick="calcula();">Calular</button>
+</div>
+<div id="sepa">
+
+</div>
+<div id="resultado" align="center">
+</div>
+</body>
+</html>

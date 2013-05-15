@@ -1,0 +1,8 @@
+@charset "utf-8";
+#sepa {
+	height:50px;
+}
+input {
+	width:60px;
+	border-radius: 5px;
+}
